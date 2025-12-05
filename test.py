@@ -195,9 +195,18 @@ def generate_daily_graphs(days: int = DAYS) -> None:
 
 
 if __name__ == "__main__":
-    png_files = glob.glob("*.png")
-    for png_file in png_files:
-        os.remove(png_file)
-        print(f"Deleted: {png_file}")
+    import sys
     
-    generate_daily_graphs()
+    try:
+        png_files = glob.glob("*.png")
+        for png_file in png_files:
+            os.remove(png_file)
+            print(f"Deleted: {png_file}")
+        
+        generate_daily_graphs()
+        print(f"[{datetime.now().isoformat()}] Script completed successfully")
+        sys.exit(0)
+    except Exception as e:
+        error_msg = f"[{datetime.now().isoformat()}] Error: {str(e)}"
+        print(error_msg, file=sys.stderr)
+        sys.exit(1)
