@@ -15,6 +15,8 @@ cp .env.example .env
 # Then edit .env with your actual tokens
 ```
 
+The `.env` file is already created locally - just edit it with your actual tokens.
+
 Or set environment variables manually:
 ```bash
 export ADJUST_TOKEN="your_adjust_token_here"
