@@ -45,13 +45,20 @@ cd ad_tracking
 
 2. **Set up the environment:**
 ```bash
+# Use the automated installer (recommended for Raspberry Pi)
+chmod +x install_pi.sh
+./install_pi.sh
+
+# Or install manually:
 pip3 install -r requirements.txt
+
+# Set up .env file
 cp .env.example .env
 # Edit .env with your actual tokens
 nano .env
 ```
 
-**⚠️ Note for Raspberry Pi:** Matplotlib installation can take 10-30+ minutes as it compiles some dependencies. This is normal - be patient! See [INSTALL.md](INSTALL.md) for faster installation options.
+**⚠️ Note for Raspberry Pi:** Matplotlib often fails to compile due to GCC crashes. Use `./install_pi.sh` which includes workarounds. See [INSTALL.md](INSTALL.md) for details.
 
 3. **Set up the cron job:**
 ```bash
