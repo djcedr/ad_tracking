@@ -16,6 +16,8 @@ else
     echo "Note: Consider creating a virtual environment for better isolation"
 fi
 
+# Create cron job that uses venv Python and loads .env
+# The .env file is loaded automatically by python-dotenv in the script
 CRON_JOB="0 7 * * * cd $SCRIPT_DIR && $PYTHON_PATH test.py >> $SCRIPT_DIR/cron.log 2>&1"
 
 # Check if cron job already exists
