@@ -143,7 +143,13 @@ def generate_daily_graphs(days: int = DAYS) -> None:
     plt.gca().set_facecolor("white")
     for network in networks:
         spend_values = [net_cost_by_day.get(d, {}).get(network, 0.0) for d in days_sorted]
-        plt.plot(dates, spend_values, marker='o', label=network, linewidth=2)
+        line = plt.plot(dates, spend_values, marker='o', label=network, linewidth=2)
+        # Add data labels
+        for i, (date_val, value) in enumerate(zip(dates, spend_values)):
+            if value > 0:  # Only label non-zero values
+                plt.annotate(f'${value:.0f}', (date_val, value), 
+                           textcoords="offset points", xytext=(0,10), 
+                           ha='center', fontsize=8, alpha=0.7)
     
     plt.title("Spend by Channel", fontsize=14, fontweight='bold')
     plt.xlabel("Date", fontsize=12)
@@ -170,11 +176,32 @@ def generate_daily_graphs(days: int = DAYS) -> None:
     line2 = ax1.plot(dates, spend_values, marker='s', label='Spend ($)', color='tab:green', linewidth=2)
     ax1.tick_params(axis='y', labelcolor='tab:blue')
     ax1.grid(True, alpha=0.3)
+    
+    # Add data labels for installs
+    for i, (date_val, value) in enumerate(zip(dates, installs_values)):
+        if value > 0:
+            ax1.annotate(f'{int(value)}', (date_val, value), 
+                        textcoords="offset points", xytext=(0,10), 
+                        ha='center', fontsize=7, alpha=0.7, color='tab:blue')
+    
+    # Add data labels for spend
+    for i, (date_val, value) in enumerate(zip(dates, spend_values)):
+        if value > 0:
+            ax1.annotate(f'${value:.0f}', (date_val, value), 
+                        textcoords="offset points", xytext=(0,-15), 
+                        ha='center', fontsize=7, alpha=0.7, color='tab:green')
 
     ax2 = ax1.twinx()
     ax2.set_ylabel("eCPI ($)", fontsize=12, color='tab:red')
     line3 = ax2.plot(dates, ecpi_values, marker='^', label='eCPI ($)', color='tab:red', linewidth=2)
     ax2.tick_params(axis='y', labelcolor='tab:red')
+    
+    # Add data labels for eCPI
+    for i, (date_val, value) in enumerate(zip(dates, ecpi_values)):
+        if value > 0:
+            ax2.annotate(f'${value:.2f}', (date_val, value), 
+                        textcoords="offset points", xytext=(0,10), 
+                        ha='center', fontsize=7, alpha=0.7, color='tab:red')
 
     lines = line1 + line2 + line3
     labels = [l.get_label() for l in lines]
