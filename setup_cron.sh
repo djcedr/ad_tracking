@@ -2,7 +2,20 @@
 # Setup script for running ad_tracking script daily at 7am
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-PYTHON_PATH="$(which python3)"
+
+# Check if venv exists and use its Python, otherwise use system Python
+if [ -f "$SCRIPT_DIR/venv/bin/python3" ]; then
+    PYTHON_PATH="$SCRIPT_DIR/venv/bin/python3"
+    echo "Using virtual environment Python: $PYTHON_PATH"
+elif [ -f "$SCRIPT_DIR/venv/bin/python" ]; then
+    PYTHON_PATH="$SCRIPT_DIR/venv/bin/python"
+    echo "Using virtual environment Python: $PYTHON_PATH"
+else
+    PYTHON_PATH="$(which python3)"
+    echo "Using system Python: $PYTHON_PATH"
+    echo "Note: Consider creating a virtual environment for better isolation"
+fi
+
 CRON_JOB="0 7 * * * cd $SCRIPT_DIR && $PYTHON_PATH test.py >> $SCRIPT_DIR/cron.log 2>&1"
 
 # Check if cron job already exists
