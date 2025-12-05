@@ -7,6 +7,9 @@ from collections import defaultdict
 import requests
 import matplotlib.pyplot as plt
 from datetime import datetime
+from dotenv import load_dotenv
+
+load_dotenv()
 
 BASE_URL = os.environ.get("ADJUST_BASE_URL", "https://automate.adjust.com").rstrip("/")
 REPORT_URL = f"{BASE_URL}/reports-service/report"

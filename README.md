@@ -9,7 +9,13 @@ A Python script to fetch ad tracking data from Adjust API and generate daily rep
 pip install -r requirements.txt
 ```
 
-2. Set environment variables:
+2. Create a `.env` file with your credentials:
+```bash
+cp .env.example .env
+# Then edit .env with your actual tokens
+```
+
+Or set environment variables manually:
 ```bash
 export ADJUST_TOKEN="your_adjust_token_here"
 export SLACK_TOKEN="your_slack_token_here"
