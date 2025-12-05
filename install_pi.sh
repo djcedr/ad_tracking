@@ -87,3 +87,5 @@ python3 -c "import matplotlib; print(f'Matplotlib {matplotlib.__version__} insta
     echo "Warning: Matplotlib import failed. You may need to install system packages."
 }
 
+
+
