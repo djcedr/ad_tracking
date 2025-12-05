@@ -44,6 +44,22 @@ cd ad_tracking
 ```
 
 2. **Set up the environment:**
+
+**If matplotlib is installed system-wide:**
+```bash
+# Install matplotlib in venv
+chmod +x install_venv.sh
+./install_venv.sh
+
+# Or recreate venv with system packages access:
+deactivate
+rm -rf venv
+python3 -m venv --system-site-packages venv
+source venv/bin/activate
+pip install requests python-dotenv
+```
+
+**If starting fresh:**
 ```bash
 # Use the automated installer (recommended for Raspberry Pi)
 chmod +x install_pi.sh
@@ -51,14 +67,16 @@ chmod +x install_pi.sh
 
 # Or install manually:
 pip3 install -r requirements.txt
+```
 
-# Set up .env file
+**Set up .env file:**
+```bash
 cp .env.example .env
 # Edit .env with your actual tokens
 nano .env
 ```
 
-**⚠️ Note for Raspberry Pi:** Matplotlib often fails to compile due to GCC crashes. Use `./install_pi.sh` which includes workarounds. See [INSTALL.md](INSTALL.md) for details.
+**⚠️ Note for Raspberry Pi:** Matplotlib often fails to compile due to GCC crashes. If you have system matplotlib installed, use `./install_venv.sh` or recreate venv with `--system-site-packages`. See [INSTALL.md](INSTALL.md) for details.
 
 3. **Set up the cron job:**
 ```bash
