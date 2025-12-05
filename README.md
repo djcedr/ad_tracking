@@ -51,6 +51,8 @@ cp .env.example .env
 nano .env
 ```
 
+**⚠️ Note for Raspberry Pi:** Matplotlib installation can take 10-30+ minutes as it compiles some dependencies. This is normal - be patient! See [INSTALL.md](INSTALL.md) for faster installation options.
+
 3. **Set up the cron job:**
 ```bash
 ./setup_cron.sh
