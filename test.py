@@ -167,8 +167,13 @@ def generate_daily_graphs(days: int = DAYS) -> None:
     ax1.set_facecolor("white")
     
     installs_values = [_to_int(daily_by_day.get(d, {}).get("installs", 0) or 0) for d in days_sorted]
-    spend_values = [_to_float(daily_by_day.get(d, {}).get("cost", 0) or 0.0) for d in days_sorted]
-    ecpi_values = [_to_float(daily_by_day.get(d, {}).get("ecpi_all", 0) or 0.0) for d in days_sorted]
+    # Calculate spend by summing all network costs per channel for each day
+    spend_values = [sum(net_cost_by_day.get(d, {}).values()) for d in days_sorted]
+    # Recalculate eCPI as spend / installs (installs are correct from daily report)
+    ecpi_values = [
+        (spend / installs) if installs > 0 else 0.0
+        for spend, installs in zip(spend_values, installs_values)
+    ]
 
     ax1.set_xlabel("Date", fontsize=12)
     ax1.set_ylabel("Installs / Spend ($)", fontsize=12, color='tab:blue')
